@@ -16,7 +16,6 @@
 
 
 @property (nonatomic, strong) ZSKJNoticeOptionControl *optionControl;
-@property (nonatomic, strong) NSMutableArray *itemArray;
 
 @property (nonatomic, strong) SSKJ_TableView *tableView;
 
@@ -29,6 +28,9 @@
 {
     [super viewDidLoad];
     [self setTitle:@"消息列表"];
+    
+    
+    
 }
 
 
@@ -47,6 +49,25 @@
         }];
         
         
+        for (int i = 0; i < 2; i++)
+        {
+            ZSKJNoticeModel *model = [[ZSKJNoticeModel alloc]init];
+            [model setType:UnreadNoticeType];
+            [model setTitle:@"取消课程通知"];
+            [model setContent:@"吴洋洋取消了课程，课程时间：2020-11-17 16:00-17:00，课程名：狗狗与小鸟"];
+            [model setDate:@"刚刚"];
+            [self.itemArray addObject:model];
+        }
+        
+        for (int i = 0; i < 3; i++)
+        {
+            ZSKJNoticeModel *model = [[ZSKJNoticeModel alloc]init];
+            [model setType:UnreadNoticeType];
+            [model setTitle:@"请假通知"];
+            [model setContent:@"张明明请假，课程时间：2020-11-17 16:00-17:00，课程名：狗狗与小鸟"];
+            [model setDate:@"2020-11-18 13:56"];
+            [self.itemArray addObject:model];
+        }
         
         
         
@@ -147,35 +168,6 @@
     return _tableView;
 }
 
-
-
--(NSMutableArray *)itemArray
-{
-    if (!_itemArray)
-    {
-        _itemArray = [NSMutableArray array];
-        for (int i = 0; i < 2; i++)
-        {
-            ZSKJNoticeModel *model = [[ZSKJNoticeModel alloc]init];
-            [model setType:UnreadNoticeType];
-            [model setTitle:@"取消课程通知"];
-            [model setContent:@"吴洋洋取消了课程，课程时间：2020-11-17 16:00-17:00，课程名：狗狗与小鸟"];
-            [model setDate:@"刚刚"];
-            [_itemArray addObject:model];
-        }
-        
-        for (int i = 0; i < 3; i++)
-        {
-            ZSKJNoticeModel *model = [[ZSKJNoticeModel alloc]init];
-            [model setType:UnreadNoticeType];
-            [model setTitle:@"请假通知"];
-            [model setContent:@"张明明请假，课程时间：2020-11-17 16:00-17:00，课程名：狗狗与小鸟"];
-            [model setDate:@"2020-11-18 13:56"];
-            [_itemArray addObject:model];
-        }
-    }
-    return _itemArray;
-}
 
 
 

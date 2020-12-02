@@ -16,7 +16,7 @@
     if (self)
     {
         [self setSelectionStyle:UITableViewCellSelectionStyleNone];
-        [self.contentView setBackgroundColor:KLineColor];
+        [self.contentView setBackgroundColor:KWhiteColor];
     }
     return self;
 }

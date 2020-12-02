@@ -191,6 +191,8 @@
 		965A06782577916F00351E23 /* ZSKJCourseReadyTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 965A06772577916F00351E23 /* ZSKJCourseReadyTableView.m */; };
 		965A067C2577918200351E23 /* ZSKJCourseAlreadyTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 965A067B2577918200351E23 /* ZSKJCourseAlreadyTableView.m */; };
 		965A06812577943600351E23 /* ZSKJCourseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 965A06802577943600351E23 /* ZSKJCourseModel.m */; };
+		965A069425779CD400351E23 /* ZSKJCreationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 965A069325779CD400351E23 /* ZSKJCreationViewController.m */; };
+		965A069825779E1800351E23 /* ZSKJCreationCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 965A069725779E1800351E23 /* ZSKJCreationCollectionViewCell.m */; };
 		96A1A87D256DFF9400876755 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96A1A87B256DFF9400876755 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -576,6 +578,10 @@
 		965A067B2577918200351E23 /* ZSKJCourseAlreadyTableView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSKJCourseAlreadyTableView.m; sourceTree = "<group>"; };
 		965A067F2577943600351E23 /* ZSKJCourseModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSKJCourseModel.h; sourceTree = "<group>"; };
 		965A06802577943600351E23 /* ZSKJCourseModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSKJCourseModel.m; sourceTree = "<group>"; };
+		965A069225779CD400351E23 /* ZSKJCreationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSKJCreationViewController.h; sourceTree = "<group>"; };
+		965A069325779CD400351E23 /* ZSKJCreationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSKJCreationViewController.m; sourceTree = "<group>"; };
+		965A069625779E1800351E23 /* ZSKJCreationCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSKJCreationCollectionViewCell.h; sourceTree = "<group>"; };
+		965A069725779E1800351E23 /* ZSKJCreationCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSKJCreationCollectionViewCell.m; sourceTree = "<group>"; };
 		96A1A87C256DFF9400876755 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1445,6 +1451,8 @@
 				965A063F2577828400351E23 /* ZSKJMineServiceViewController.m */,
 				965A063A2577827700351E23 /* ZSKJMineinformationViewController.h */,
 				965A063B2577827700351E23 /* ZSKJMineinformationViewController.m */,
+				965A069225779CD400351E23 /* ZSKJCreationViewController.h */,
+				965A069325779CD400351E23 /* ZSKJCreationViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1471,6 +1479,8 @@
 				965A06332577821100351E23 /* ZSKJMineCellItemControl.m */,
 				965A064F257782FC00351E23 /* ZSKJMineinformationCellItemControl.h */,
 				965A064E257782FC00351E23 /* ZSKJMineinformationCellItemControl.m */,
+				965A069625779E1800351E23 /* ZSKJCreationCollectionViewCell.h */,
+				965A069725779E1800351E23 /* ZSKJCreationCollectionViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1554,6 +1564,7 @@
 				965A057625777CB600351E23 /* MJProperty.m in Sources */,
 				965A05BB25777CB700351E23 /* IQKeyboardReturnKeyHandler.m in Sources */,
 				965A05C425777CB700351E23 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				965A069825779E1800351E23 /* ZSKJCreationCollectionViewCell.m in Sources */,
 				965A06402577828400351E23 /* ZSKJMineServiceViewController.m in Sources */,
 				965A058C25777CB600351E23 /* NSBundle+MJRefresh.m in Sources */,
 				965A05D025777CB700351E23 /* AFNetworkReachabilityManager.m in Sources */,
@@ -1592,6 +1603,7 @@
 				965A05C025777CB700351E23 /* ZSKJDeviceAlertView.m in Sources */,
 				965A05B525777CB700351E23 /* IQKeyboardManager.m in Sources */,
 				965A058D25777CB600351E23 /* UIView+MJExtension.m in Sources */,
+				965A069425779CD400351E23 /* ZSKJCreationViewController.m in Sources */,
 				965A06442577829400351E23 /* ZSKJSettViewController.m in Sources */,
 				965A05D425777CB700351E23 /* SDCycleScrollView.m in Sources */,
 				965A05B025777CB700351E23 /* IQTitleBarButtonItem.m in Sources */,

@@ -15,6 +15,7 @@
 #import "ZSKJSettViewController.h" //!< 设置
 #import "ZSKJTemporaryViewController.h"  //!<临时课堂
 #import "ZSKJNoticeViewController.h" //!< 我的消息
+#import "ZSKJCreationViewController.h" //!< 我的作品
 
 
 
@@ -235,7 +236,7 @@
 #pragma mark case 10 设置
         case 10:
         {
-            ZSKJSettViewController *set = [[ZSKJSettViewController alloc]init];
+            ZSKJCreationViewController *set = [[ZSKJCreationViewController alloc]init];
             [self pushViewController:set animated:YES];
         }
             break;

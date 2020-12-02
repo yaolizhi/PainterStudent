@@ -31,6 +31,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
+        [self.contentView setBackgroundColor:KLineColor];
         [self.contentView addSubview:self.bgView];
         [self.bgView setBackgroundColor:KWhiteColor];
         

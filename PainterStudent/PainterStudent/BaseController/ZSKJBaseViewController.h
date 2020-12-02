@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ZSKJBaseViewController : UIViewController
 
 
+@property (nonatomic, strong) NSMutableArray *itemArray;
+
 
 -(void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
 -(void)viewWillAppear:(BOOL)animated bottomBar:(BOOL)hidden;
