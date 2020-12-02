@@ -1,0 +1,104 @@
+//
+//  PrefixHeader.pch
+//  PainterStudent
+//
+//  Created by 姚立志 on 2020/12/2.
+//
+
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+
+
+
+#define AppWindow [[UIApplication sharedApplication].windows firstObject]
+
+#define WindowContent  ([[UIScreen mainScreen] bounds])
+
+#define ScreenSize      [UIScreen mainScreen].bounds.size
+
+#define ScreenWidth     ([[UIScreen mainScreen] bounds].size.width)
+
+#define ScreenHeight    ([[UIScreen mainScreen] bounds].size.height)
+
+//各屏幕尺寸比例
+#define ScaleW(width)  width*ScreenWidth/375.0
+
+//iPhoneX系列
+#define Height_StatusBar [UIApplication sharedApplication].statusBarFrame.size.height
+
+//weakSelf
+#define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self
+#define imageName(name) [UIImage imageNamed:(name)]
+
+
+
+
+
+
+
+#import "Masonry.h"
+#import "MJRefresh.h"
+#import "ZSKJTextFieldControl.h"
+#import "ZSKJAFHTTPManager.h"
+#import "UIView+Extension.h"
+#import "ZSKJDefaultAlertView.h"
+#import "ZSKJHelper.h"
+#import "UIImage+RoundedRectImage.h"
+#import "UIImageView+Category.h"
+#import "SSKJ_TableView.h"
+#import "SSKJ_ScrollView.h"
+#import "ZSKJCollectionView.h"
+
+
+
+
+
+
+//video
+#define RECORD_MAX_TIME 8.0           //最长录制时间
+#define TIMER_INTERVAL 0.05         //计时器刷新频率
+#define VIDEO_FOLDER @"videoFolder" //视频录制存放文件夹
+
+
+
+/**颜色*/
+
+//颜色
+#define WLColor(r,g,b,a) [UIColor colorWithRed:(r)/255.f green:(g)/255.f blue:(b)/255.f alpha:a]
+
+//由十六进制转换成是十进制
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
+blue:((float)(rgbValue & 0xFF))/255.0 \
+alpha:1.0]
+
+//由十六进制转换成是十进制
+#define UIColorFromARGB(rgbValue,a) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+green:((float)((rgbValue & 0xFF00) >> 8))/255.0 \
+blue:((float)(rgbValue & 0xFF))/255.0 \
+alpha:a]
+
+
+
+#define KMainColor UIColorFromRGB(0xFF7F00) //项目橙黄色
+#define KWhiteColor UIColorFromRGB(0xFFFFFF) //项目白色
+#define KTextColor UIColorFromRGB(0x222222) //项目文本颜色
+#define KSubTextColor UIColorFromRGB(0x999999) //项目附件文本颜色
+#define KLineColor UIColorFromRGB(0xEDF2F7) //项目分割线颜色
+#define KBlueColor UIColorFromRGB(0x2BA3FF) //项目蓝色
+#define KGreenColor UIColorFromRGB(0x20D357) //项目绿色
+#define KGrayLineColor UIColorFromRGB(0xCCCCCC) //项目灰色
+#define KRedColor UIColorFromRGB(0xFF5959) //项目红色
+
+
+
+#define CornerRadius_8  8
+#define CornerRadius_5  5
+#define CornerRadius_4  4
+#define CornerRadius_3  3
+
+
+
+#endif /* PrefixHeader_pch */
