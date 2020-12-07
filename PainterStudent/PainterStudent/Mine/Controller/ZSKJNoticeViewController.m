@@ -17,6 +17,7 @@
 
 @property (nonatomic, strong) ZSKJNoticeOptionControl *optionControl;
 
+
 @property (nonatomic, strong) SSKJ_TableView *tableView;
 
 
@@ -167,8 +168,6 @@
     }
     return _tableView;
 }
-
-
 
 
 

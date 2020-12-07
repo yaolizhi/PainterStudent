@@ -23,6 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)setOneTitle:(NSString*)oneTitle withTwoTitle:(NSString*)twoTitle;
 
 
+/// 选中第几个
+/// @param index 默认选择第一个下标为0
+-(void)setIndexTag:(NSInteger)index;
+
 @end
 
 NS_ASSUME_NONNULL_END

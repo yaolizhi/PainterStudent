@@ -12,7 +12,10 @@
 
 
 
-@interface ZSKJCourseViewController () <ZSKJCourseOptionControlDeletage>
+@interface ZSKJCourseViewController () <ZSKJCourseOptionControlDeletage,ZSKJOptionScrollViewDeletage>
+
+@property (nonatomic, strong) ZSKJOptionScrollView *optionScrollView; //!< 滚动视图
+
 
 @property (nonatomic, strong) ZSKJCourseOptionControl *courseOptionControl;
 @property (nonatomic, strong) ZSKJCourseReadyTableView *readyTableView;
@@ -40,20 +43,13 @@
     if (views)
     {
         [self.view addSubview:self.courseOptionControl];
-        [self.view addSubview:self.alreadyableView];
-        [self.view addSubview:self.readyTableView];
-        [self.alreadyableView mas_makeConstraints:^(MASConstraintMaker *make) {
-           
-            make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(self.courseOptionControl.bottom, 0, self.tabbarHeight, 0));
-                    
-        }];
+        [self.view addSubview:self.optionScrollView];
+        [self.optionScrollView addSubview:self.alreadyableView];
+        [self.optionScrollView addSubview:self.readyTableView];
         
         
-        [self.readyTableView mas_makeConstraints:^(MASConstraintMaker *make) {
-           
-            make.edges.equalTo(self.view).insets(UIEdgeInsetsMake(self.courseOptionControl.bottom, 0, self.tabbarHeight, 0));
-                    
-        }];
+        [self.readyTableView beginRefreshing];
+        [self.alreadyableView beginRefreshing];
     }
 }
 
@@ -62,22 +58,16 @@
 #pragma mark ZSKJCourseOptionControlDeletage
 -(void)optionItemAction:(NSInteger)index
 {
-    [self.alreadyableView setHidden:YES];
-    [self.readyTableView setHidden:YES];
-    switch (index)
-    {
-        case 0:
-        {
-            [self.readyTableView setHidden:NO];
-        }
-            break;
-        case 1:
-        {
-            [self.alreadyableView setHidden:NO];
-        }
-            break;
-    }
+    [self.optionScrollView setContentOffPage:index];
 }
+
+#pragma mark ZSKJOptionScrollViewDeletage
+-(void)optionScrollPage:(NSInteger)page
+{
+    [self.courseOptionControl setIndexTag:page];
+}
+
+
 
 
 
@@ -99,7 +89,7 @@
 {
     if (!_readyTableView)
     {
-        _readyTableView = [[ZSKJCourseReadyTableView alloc]init];
+        _readyTableView = [[ZSKJCourseReadyTableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, self.optionScrollView.height)];
     }
     return _readyTableView;
 }
@@ -109,9 +99,19 @@
 {
     if (!_alreadyableView)
     {
-        _alreadyableView = [[ZSKJCourseAlreadyTableView alloc]init];
+        _alreadyableView = [[ZSKJCourseAlreadyTableView alloc]initWithFrame:CGRectMake(ScreenWidth, 0, ScreenWidth, self.optionScrollView.height)];
     }
     return _alreadyableView;
+}
+
+-(ZSKJOptionScrollView *)optionScrollView
+{
+    if (!_optionScrollView)
+    {
+        _optionScrollView = [[ZSKJOptionScrollView alloc]initWithFrame:CGRectMake(0, self.courseOptionControl.bottom, ScreenWidth, (ScreenHeight-(self.courseOptionControl.bottom+self.tabbarHeight))) witDeletage:self];
+        [_optionScrollView setContentSize:CGSizeMake(2*ScreenWidth, (ScreenHeight-(self.courseOptionControl.bottom+self.tabbarHeight)))];
+    }
+    return _optionScrollView;
 }
 
 

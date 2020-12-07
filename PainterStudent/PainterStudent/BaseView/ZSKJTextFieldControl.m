@@ -29,8 +29,8 @@
     self = [super init];
     if (self)
     {
+        [self setItemColor:NO];
         [self setBackgroundColor:KWhiteColor];
-
         [self addSubview:self.titleLabel];
         [self addSubview:self.imageView];
         [self addSubview:self.inputTextField];
@@ -43,6 +43,7 @@
             make.left.equalTo(self.mas_left);
             make.right.equalTo(self.mas_right);
             make.height.equalTo(@(ScaleW(0.5)));
+            make.bottom.equalTo(self.mas_bottom);
                     
         }];
         
@@ -71,12 +72,12 @@
                 [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.left.equalTo(self.mas_left);
                     make.centerY.mas_equalTo(self.mas_centerY);
-                    make.width.height.equalTo(@(40));
+                    make.width.height.equalTo(@(30));
                 }];
                 
                 [self.inputTextField mas_makeConstraints:^(MASConstraintMaker *make) {
                    
-                    make.left.equalTo(self.imageView.mas_right);
+                    make.left.equalTo(self.imageView.mas_right).offset(10);
                     make.right.equalTo(self.mas_right);
                     make.height.equalTo(self.mas_height);
                 }];
@@ -116,6 +117,27 @@
 }
 
 
+-(void)setIcon:(NSString*)icon
+{
+    [self.imageView setImageName:icon];
+}
+
+-(void)setLineHidden:(BOOL)hidden
+{
+    [self.lineView setHidden:hidden];
+}
+
+-(NSString*)text
+{
+    NSString *content = self.inputTextField.text;
+    if (content.length <= 0)
+    {
+        return @"";
+    }
+    return content;
+}
+
+
 
 
 #pragma mark - Getter / Setter
@@ -148,10 +170,9 @@
     if (!_inputTextField)
     {
         _inputTextField = [[UITextField alloc]init];
-        [_inputTextField setSecureTextEntry:YES];
-        [_inputTextField setPlaceholder:@""];
-        [_inputTextField setFont:[UIFont systemFontOfSize:12]];
+        [_inputTextField setFont:[UIFont systemFontOfSize:18]];
         [_inputTextField setTintColor:KMainColor];
+        
     }
     return _inputTextField;
 }
@@ -166,6 +187,17 @@
         [_lineView setBackgroundColor:KLineColor];
     }
     return _lineView;
+}
+
+-(void)setItemColor:(BOOL)color
+{
+    if (color)
+    {
+        [self setBackgroundColor:[UIColor purpleColor]];
+
+        [self.inputTextField setBackgroundColor:[UIColor orangeColor]];
+        [self.imageView setBackgroundColor:[UIColor redColor]];
+    }
 }
 
 

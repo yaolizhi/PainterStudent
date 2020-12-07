@@ -31,8 +31,9 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
+        [self.contentView setBackgroundColor:KLineColor];
         [self.contentView addSubview:self.bgView];
-        [self.bgView setBackgroundColor:KWhiteColor];
+
         
         [self.bgView addSubview:self.dataLabel];
         [self.bgView addSubview:self.titleLabel];
@@ -114,6 +115,51 @@
 -(void)setModel:(ZSKJCourseModel *)model
 {
     _model = model;
+    [self.preview sd_setImageWithURL:[NSURL URLWithString:model.img]];
+    [self.dataLabel setText:[NSString stringWithFormat:@"%@ %@",model.date,model.time]];
+    [self.titleLabel setText:model.title];
+    [self.subtitleLabel setText:model.title];
+    [self.typeLabel setText:model.type_text];
+    [self.lectureBtn setTitle:model.status_text forState:UIControlStateNormal];
+    
+    switch (model.type)
+    {
+        case 1:
+        {
+            [self.typeView setImageName:@"typeitems"];
+        }
+            break;
+        case 2:
+        {
+            [self.typeView setImageName:@"auditionl"];
+            
+        }
+            break;
+    }
+    
+    
+    //!< 0 未到时间  1已到课  2已结束 -1 学生请假  -2 老师请假  -3 老师缺席
+    switch (model.status)
+    {
+        case -3:
+        case -2:
+        case -1:
+        case 0:
+        case 2:
+        {
+            [self.lectureBtn setBackgroundColor:UIColorFromRGB(0xCCCCCC)];
+            [self.lectureBtn setUserInteractionEnabled:YES];
+        }
+            break;
+        case 1:
+        {
+            [self.lectureBtn setBackgroundColor:KMainColor];
+            [self.lectureBtn setUserInteractionEnabled:YES];
+        }
+            break;
+    }
+    
+    
     
     
     
@@ -143,7 +189,6 @@
         _dataLabel = [[UILabel alloc]init];
         [_dataLabel setFont:[UIFont boldSystemFontOfSize:18]];
         [_dataLabel setTextColor:KTextColor];
-        [_dataLabel setText:@"2020-11-16  10:00-11:00"];
     }
     return _dataLabel;
 }
@@ -155,7 +200,6 @@
         _titleLabel = [[UILabel alloc]init];
         [_titleLabel setFont:[UIFont boldSystemFontOfSize:14]];
         [_titleLabel setTextColor:KTextColor];
-        [_titleLabel setText:@"狗狗和小鸟"];
     }
     return _titleLabel;
 }
@@ -168,7 +212,6 @@
         _subtitleLabel = [[UILabel alloc]init];
         [_subtitleLabel setFont:[UIFont boldSystemFontOfSize:12]];
         [_subtitleLabel setTextColor:KSubTextColor];
-        [_subtitleLabel setText:@"线条与色彩-0基础，初学者"];
     }
     return _subtitleLabel;
 }
@@ -186,7 +229,6 @@
         _typeLabel = [[UILabel alloc]init];
         [_typeLabel setFont:[UIFont boldSystemFontOfSize:12]];
         [_typeLabel setTextColor:KWhiteColor];
-        [_typeLabel setText:@"正式课"];
     }
     return _typeLabel;
 }
@@ -197,7 +239,6 @@
     if (!_typeView)
     {
         _typeView = [[UIImageView alloc]init];
-        [_typeView setImageName:@"typeitems"];
     }
     return _typeView;
 }
@@ -208,7 +249,7 @@
     if (!_preview)
     {
         _preview = [[UIImageView alloc]init];
-        [_preview setBackgroundColor:[UIColor purpleColor]];
+        [_preview setBackgroundColor:KLineColor];
     }
     return _preview;
 }
@@ -220,7 +261,6 @@
     if (!_lectureBtn)
     {
         _lectureBtn = [[UIButton alloc]init];
-        [_lectureBtn setTitle:@"开始讲课" forState:UIControlStateNormal];
         [_lectureBtn setTitleColor:KWhiteColor forState:UIControlStateNormal];
         [_lectureBtn setBackgroundColor:KMainColor];
         [_lectureBtn setTag:2];

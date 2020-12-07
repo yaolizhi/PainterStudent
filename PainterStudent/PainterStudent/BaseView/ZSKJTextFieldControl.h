@@ -19,11 +19,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// 设置输入是否是加密形式
-/// @param secure BOOL 
+/// @param secure BOOL
 -(void)setSecureTextEntry:(BOOL)secure;
 -(void)setPlaceholder:(NSString*)placeholder;
 -(void)setFont:(UIFont*)font;
 -(void)setTitle:(NSString*)title;
+-(void)setIcon:(NSString*)icon;
+-(void)setLineHidden:(BOOL)hidden;
+-(NSString*)text;
+
+
 
 
 

@@ -26,21 +26,70 @@
 
 -(void)postUrl:(NSString *)url
  parameters:(nullable id)parameters
-    success:(nullable void (^)(NSURLSessionDataTask *task, id _Nullable responseObject))success
-       failure:(nullable void (^)(NSURLSessionDataTask * _Nullable task, NSError *error))failure
+    success:(nullable void (^)(id responseObject))success
+       failure:(nullable void (^)(NSError *error))failure
 {
     
+    [MBProgressHUD showHUDAddedTo:AppWindow animated:YES];
+    
+    
+    
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
-    [manager POST:url parameters:parameters progress:nil success:success failure:failure];
+    [manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+    {
+        [MBProgressHUD hideHUDForView:AppWindow animated:YES];
+        NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
+        NSString *msg = [responseObject objectForKey:@"msg"];
+        switch (code)
+        {
+            case 0:
+            case 401:
+            {
+                [MBHUD showError:msg];
+                
+                [ZSKJHelper setLogin:YES];
+            }
+                break;
+        }
+        success(responseObject);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+     {
+        [MBProgressHUD hideHUDForView:AppWindow animated:YES];
+        failure(error);
+    }];
 }
 
 
 
--(void)getUrl:(NSString *)url parameters:(id)parameters success:(void (^)(NSURLSessionDataTask * _Nonnull, id _Nullable))success failure:(void (^)(NSURLSessionDataTask * _Nullable, NSError * _Nonnull))failure
+-(void)getUrl:(NSString *)url parameters:(id)parameters success:(void (^)(id responseObject))success failure:(void (^)(NSError *error))failure
 {
+    
+    [MBProgressHUD showHUDAddedTo:AppWindow animated:YES];
+    
     AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc]init];
-    [manager GET:url parameters:parameters progress:nil success:success failure:failure];
+    [manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject)
+     {
+         [MBProgressHUD hideHUDForView:AppWindow animated:YES];
+         NSInteger code = [[responseObject objectForKey:@"code"] integerValue];
+         NSString *msg = [responseObject objectForKey:@"msg"];
+         switch (code)
+         {
+             case 0:
+             case 401:
+             {
+                 [MBHUD showError:msg];
+             }
+                 break;
+         }
+        success(responseObject);
+         
+     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error)
+    {
+         [MBProgressHUD hideHUDForView:AppWindow animated:YES];
+     }];
 }
+
 
 
 

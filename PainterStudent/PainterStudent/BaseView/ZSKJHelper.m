@@ -8,6 +8,7 @@
 #import "ZSKJHelper.h"
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+#import "ZSKJLoginViewController.h"
 
 @interface ZSKJHelper ()
 
@@ -85,4 +86,10 @@ static ZSKJHelper *shareHelper = nil;
     return currentShowingVC;
 }
 
+
+
++(void)setLogin:(BOOL)login
+{   
+    [AppWindow setRootViewController:[[ZSKJLoginViewController alloc]init]];
+}
 @end

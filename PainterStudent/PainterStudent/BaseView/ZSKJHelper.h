@@ -24,6 +24,10 @@ NS_ASSUME_NONNULL_BEGIN
 +(void)pushViewController:(UIViewController*)object animated:(BOOL)animated;
 
 
++(void)setLogin:(BOOL)login;
+
+
+
 @end
 
 NS_ASSUME_NONNULL_END

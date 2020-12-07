@@ -6,15 +6,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Masonry.h"
+#import <Foundation/Foundation.h>
+
 
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZSKJBaseViewController : UIViewController
 
-
+@property (nonatomic, assign) int page;
 @property (nonatomic, strong) NSMutableArray *itemArray;
+
+
+
 
 
 -(void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
@@ -84,6 +88,14 @@ NS_ASSUME_NONNULL_BEGIN
 -(float)statusbarHeight;
 -(float)navbarHeight;
 -(float)tabbarHeight;
+
+//设置根目录
+-(void)setLoginRoot:(BOOL)root;
+
+
+
+
+
 
 
 @end

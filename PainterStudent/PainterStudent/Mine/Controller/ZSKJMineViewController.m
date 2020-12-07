@@ -16,6 +16,9 @@
 #import "ZSKJTemporaryViewController.h"  //!<临时课堂
 #import "ZSKJNoticeViewController.h" //!< 我的消息
 #import "ZSKJCreationViewController.h" //!< 我的作品
+#import "ZSKJEvaluationViewController.h" //!< 学习报告
+#import "ZSKJMineHeaderItemOptoonControl.h" //!< 我的作品、剩余课时、剩余请假次数
+
 
 
 
@@ -34,6 +37,11 @@
 @property (nonatomic, strong) ZSKJMineNoticeControl *noticeControl; //!< 消息
 
 
+@property (nonatomic, strong) UIView *bgView;
+@property (nonatomic, strong) ZSKJMineHeaderItemOptoonControl *opusOptoonControl; //!< 作品
+@property (nonatomic, strong) ZSKJMineHeaderItemOptoonControl *periodOptoonControl; //!< 剩余课时
+@property (nonatomic, strong) ZSKJMineHeaderItemOptoonControl *leaveOptoonControl; //!< 请假次数
+@property (nonatomic, strong) NSMutableArray *masonryViewArray;
 
 
 @property (nonatomic, strong) ZSKJMineCellItemControl *studyReportItems; //!< 学习报告
@@ -41,6 +49,7 @@
 @property (nonatomic, strong) ZSKJMineCellItemControl *temporaryItems; //!< 临时课堂
 @property (nonatomic, strong) ZSKJMineCellItemControl *serviceItems; //!< 客服
 @property (nonatomic, strong) ZSKJMineCellItemControl *settItems; //!< 设置
+
 
 
 @end
@@ -51,6 +60,9 @@
 {
     [super viewDidLoad];
     [self setTitle:@"我的"];
+    [self.opusOptoonControl setNum:@"16"];
+    [self.periodOptoonControl setNum:@"321"];
+    [self.leaveOptoonControl setNum:@"56"];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -67,13 +79,20 @@
         [self.headerBgView addSubview:self.nameLabel];
         [self.headerBgView addSubview:self.uidLabel];
         [self.headerBgView addSubview:self.noticeControl];
+        [self.view addSubview:self.bgView];
+        [self.bgView addSubview:self.opusOptoonControl];
+        [self.bgView addSubview:self.periodOptoonControl];
+        [self.bgView addSubview:self.leaveOptoonControl];
+        [self.masonryViewArray addObject:self.opusOptoonControl];
+        [self.masonryViewArray addObject:self.periodOptoonControl];
+        [self.masonryViewArray addObject:self.leaveOptoonControl];
+        
         
         [self.view addSubview:self.studyReportItems];
         [self.view addSubview:self.temporaryItems];
         [self.view addSubview:self.deviceItems];
         [self.view addSubview:self.serviceItems];
         [self.view addSubview:self.settItems];
-        
         
         [self.headerBgView mas_makeConstraints:^(MASConstraintMaker *make) {
            
@@ -115,11 +134,34 @@
         }];
         
         
-        [self.studyReportItems mas_makeConstraints:^(MASConstraintMaker *make) {
-           
+        
+        
+        [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+
             make.centerY.equalTo(self.headerBgView.mas_bottom);
-            make.left.equalTo(self.view.mas_left).offset(30);
-            make.right.equalTo(self.view.mas_right).offset(-30);
+            make.left.equalTo(self.view.mas_left).offset(15);
+            make.right.equalTo(self.view.mas_right).offset(-15);
+            make.height.equalTo(@(120));
+                    
+        }];
+        
+        
+        
+        [self.masonryViewArray mas_distributeViewsAlongAxis:MASAxisTypeHorizontal withFixedSpacing:0 leadSpacing:0 tailSpacing:0];
+            
+        // 设置array的垂直方向的约束
+        [self.masonryViewArray mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+            make.top.equalTo(@(0));
+            make.height.equalTo(@(120));
+        }];
+    
+        
+        [self.studyReportItems mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+            make.top.equalTo(self.bgView.mas_bottom).offset(15);
+            make.left.equalTo(self.view.mas_left).offset(15);
+            make.right.equalTo(self.view.mas_right).offset(-15);
             make.height.equalTo(@(60));
             
         }];
@@ -174,16 +216,17 @@
             [self pushViewController:[[ZSKJNoticeViewController alloc]init] animated:YES];
         }
             break;
-#pragma mark case 2 简历
+#pragma mark case 2 我的作品
         case 2:
         {
-            
+            ZSKJCreationViewController *set = [[ZSKJCreationViewController alloc]init];
+            [self pushViewController:set animated:YES];
         }
             break;
-#pragma mark case 3 课时明细
+#pragma mark case 3 学习报告
         case 3:
         {
-            
+            [self pushViewController:[[ZSKJEvaluationViewController alloc]init] animated:YES];
         }
             break;
 #pragma mark case 4 个人信息
@@ -236,7 +279,7 @@
 #pragma mark case 10 设置
         case 10:
         {
-            ZSKJCreationViewController *set = [[ZSKJCreationViewController alloc]init];
+            ZSKJSettViewController *set = [[ZSKJSettViewController alloc]init];
             [self pushViewController:set animated:YES];
         }
             break;
@@ -323,6 +366,59 @@
 }
 
 
+-(UIView *)bgView
+{
+    if (!_bgView)
+    {
+        _bgView = [[UIView alloc]init];
+        [_bgView setBackgroundColor:KWhiteColor];
+    }
+    return _bgView;
+}
+
+
+
+
+-(ZSKJMineHeaderItemOptoonControl *)opusOptoonControl
+{
+    if (!_opusOptoonControl)
+    {
+        _opusOptoonControl = [[ZSKJMineHeaderItemOptoonControl alloc]init];
+        [_opusOptoonControl setTitle:@"我的作品"];
+        [_opusOptoonControl addTarget:self action:@selector(itemAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_opusOptoonControl setTag:2];
+    }
+    return _opusOptoonControl;
+}
+
+
+-(ZSKJMineHeaderItemOptoonControl *)periodOptoonControl
+{
+    if (!_periodOptoonControl)
+    {
+        _periodOptoonControl = [[ZSKJMineHeaderItemOptoonControl alloc]init];
+        [_periodOptoonControl setTitle:@"剩余课时"];
+        [_periodOptoonControl addTarget:self action:@selector(itemAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_periodOptoonControl setTag:3];
+    }
+    return _periodOptoonControl;
+}
+
+-(ZSKJMineHeaderItemOptoonControl *)leaveOptoonControl
+{
+    if (!_leaveOptoonControl)
+    {
+        _leaveOptoonControl = [[ZSKJMineHeaderItemOptoonControl alloc]init];
+        [_leaveOptoonControl setTitle:@"剩余请假次数"];
+        [_leaveOptoonControl addTarget:self action:@selector(itemAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_leaveOptoonControl setTag:4];
+    }
+    return _leaveOptoonControl;
+}
+
+
+
+
 
 
 
@@ -400,6 +496,15 @@
     return _settItems;
 }
 
-
+- (NSMutableArray *)masonryViewArray
+{
+    if (!_masonryViewArray)
+    {
+        
+        _masonryViewArray = [NSMutableArray array];
+    }
+    
+    return _masonryViewArray;
+}
 
 @end

@@ -99,12 +99,6 @@
         }
             break;
     }
-    
-    
-    if ([self.deletage respondsToSelector:@selector(optionItemAction:)])
-    {
-        [self.deletage optionItemAction:index];
-    }
 }
 
 

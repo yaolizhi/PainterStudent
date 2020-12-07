@@ -39,6 +39,49 @@
 -(void)loginBtnAction:(UIButton*)sender
 {
     
+    NSString *account = self.accountFieldControl.text;
+    NSString *pwd = self.pwdFieldControl.text;
+
+    
+    if ([account isEqualToString:@""])
+    {
+        [MBHUD showError:@"账号不能为空"];
+    }
+    else if ([pwd isEqualToString:@""])
+    {
+        [MBHUD showError:@"密码不能为空"];
+    }
+    else
+    {
+
+        NSDictionary *parameters = @{@"password":pwd,@"name":account};
+        
+        
+        [[ZSKJAFHTTPManager shareManager] postUrl:Login_URL parameters:parameters success:^(NSDictionary * _Nullable responseObject)
+        {
+            ZSKJNetworkModel *netWorkModel = [ZSKJNetworkModel mj_objectWithKeyValues:responseObject];
+            if (netWorkModel.code.integerValue == 1)
+            {
+                [self setLoginRoot:YES];
+                [[ZSKJUserinfoModel shareUserinfo] setToken:netWorkModel.data];
+            }
+        } failure:^(NSError * _Nonnull error){}];
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   
+    
+    
+    
+    
+    
 }
 
 
@@ -68,22 +111,22 @@
             make.top.equalTo(self.logoImageView.mas_bottom).offset(20);
             make.left.equalTo(self.view.mas_left).offset(15);
             make.right.equalTo(self.view.mas_right).offset(-(20));
-            make.height.equalTo(@(150));
+            make.height.equalTo(@(160));
 
         }];
         
         [self.accountFieldControl mas_makeConstraints:^(MASConstraintMaker *make) {
            
             make.top.equalTo(self.backView.mas_top).offset((22));
-            make.left.equalTo(self.backView.mas_left).offset((10));
-            make.right.equalTo(self.backView.mas_right).offset(-(10));
-            make.height.equalTo(@(54));
+            make.left.equalTo(self.backView.mas_left).offset((20));
+            make.right.equalTo(self.backView.mas_right).offset(-(20));
+            make.height.equalTo(@(60));
         }];
         
         
         [self.pwdFieldControl mas_makeConstraints:^(MASConstraintMaker *make) {
            
-            make.top.equalTo(self.accountFieldControl.mas_bottom).offset((10));
+            make.top.equalTo(self.accountFieldControl.mas_bottom).offset(5);
             make.left.height.right.equalTo(self.accountFieldControl);
         }];
         
@@ -118,7 +161,7 @@
     if (!_logoImageView)
     {
         _logoImageView = [[UIImageView alloc]init];
-        [_logoImageView setBackgroundColor:[UIColor orangeColor]];
+        [_logoImageView setBackgroundColor:KLineColor];
     }
     return _logoImageView;
 }
@@ -132,6 +175,7 @@
     {
         _backView = [[UIView alloc]init];
         [_backView setBackgroundColor:[UIColor whiteColor]];
+        [_backView setCornerRadius:CornerRadius_5];
     }
     return _backView;
 }
@@ -143,7 +187,7 @@
     {
         _accountFieldControl = [[ZSKJTextFieldControl alloc]initType:2];
         [_accountFieldControl setPlaceholder:@"请输入账号"];
-        [_accountFieldControl setBackgroundColor:[UIColor redColor]];
+        [_accountFieldControl setIcon:@"account"];
     }
     return _accountFieldControl;
 }
@@ -156,8 +200,10 @@
     if (!_pwdFieldControl)
     {
         _pwdFieldControl = [[ZSKJTextFieldControl alloc]initType:2];
+        [_pwdFieldControl setSecureTextEntry:YES];
         [_pwdFieldControl setPlaceholder:@"请输入密码"];
-        [_pwdFieldControl setBackgroundColor:[UIColor purpleColor]];
+        [_pwdFieldControl setIcon:@"password"];
+        [_pwdFieldControl setLineHidden:YES];
     }
     return _pwdFieldControl;
 }
@@ -170,9 +216,10 @@
     {
         _loginBtn = [[UIButton alloc]init];
         [_loginBtn setBackgroundColor:KMainColor];
-        [_loginBtn setTitleColor:KTextColor forState:UIControlStateNormal];
+        [_loginBtn setTitleColor:KWhiteColor forState:UIControlStateNormal];
         [_loginBtn setTitle:@"登录" forState:UIControlStateNormal];
         [_loginBtn addTarget:self action:@selector(loginBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_loginBtn setCornerRadius:25.0];
     }
     return _loginBtn;
 }
@@ -184,7 +231,6 @@
     if (!_forgetBtn)
     {
         _forgetBtn = [[UIButton alloc]init];
-        [_forgetBtn setBackgroundColor:KMainColor];
         [_forgetBtn setTitleColor:KTextColor forState:UIControlStateNormal];
         [_forgetBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
         [_forgetBtn addTarget:self action:@selector(loginBtnAction:) forControlEvents:UIControlEventTouchUpInside];

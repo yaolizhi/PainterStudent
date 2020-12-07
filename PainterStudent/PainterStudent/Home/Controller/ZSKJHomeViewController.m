@@ -11,7 +11,6 @@
 
 
 @interface ZSKJHomeViewController () <UITableViewDelegate,UITableViewDataSource>
-
 @property (nonatomic, strong) SSKJ_TableView *tableView;
 
 
@@ -26,6 +25,8 @@
 {
     [super viewDidLoad];
     
+    
+    [self getNextSchedule];
 }
 
 
@@ -54,17 +55,66 @@
     }
 }
 
+#pragma mark - Private Method
+-(void)headerRefresh
+{
+    [self getNextSchedule];
+}
+
+
+#pragma mark - NetWork Method 网络请求
+#pragma mark 获取下次上课
+-(void)getNextSchedule
+{
+    WS(weakSelf);
+    NSDictionary *parameters = @{@"token":[ZSKJUserinfoModel shareUserinfo].token};
+    [[ZSKJAFHTTPManager shareManager] postUrl:NextSchedule_URL parameters:parameters success:^(id  _Nonnull responseObject) {
+        
+        ZSKJNetworkModel *netWorkModel = [ZSKJNetworkModel mj_objectWithKeyValues:responseObject];
+        if (netWorkModel.code.integerValue == 1)
+        {
+            ZSKJExhibitionModel *model = [ZSKJExhibitionModel mj_objectWithKeyValues:netWorkModel.data];
+            [weakSelf.itemArray addObject:model];
+        }
+        
+        [weakSelf.tableView endRefresh];
+        
+            
+    } failure:^(NSError * _Nonnull error) {
+        
+        [weakSelf.tableView endRefresh];
+    }];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #pragma mark - Deletage Method
 #pragma mark UITableViewDataSource
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(SSKJ_TableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    [tableView setItemArray:self.itemArray];
+    return [self.itemArray count];;
 }
+
+
 
 - (ZSKJHomeViewTableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ZSKJHomeViewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ZSKJHomeViewTableViewCell"];
+    [cell setModel:[self.itemArray objectAtIndex:indexPath.row]];
     return cell;
 }
 
@@ -103,8 +153,11 @@
         _tableView = [[SSKJ_TableView alloc]initWitDeletage:self];
         [_tableView registerClass:[ZSKJHomeViewTableViewCell class] forCellReuseIdentifier:@"ZSKJHomeViewTableViewCell"];
         [_tableView setTableHeaderView:self.topView];
+        [_tableView headerTarget:self action:@selector(headerRefresh)];
     }
     return _tableView;
 }
+
+
 
 @end
