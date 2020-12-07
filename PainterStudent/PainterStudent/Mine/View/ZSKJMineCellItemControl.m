@@ -61,8 +61,6 @@
             make.right.equalTo(self.accessoryView.mas_right);
             make.height.equalTo(@(1));
         }];
-        
-        [self setCornerRadius:CornerRadius_5];
     }
     return self;
 }

@@ -144,6 +144,8 @@
 #pragma mark 刷新完毕
 -(void)endRefresh
 {
+    
+    [self reloadData];
     if (self.mj_header.state == MJRefreshStateRefreshing)
     {
         [self.mj_header endRefreshing];

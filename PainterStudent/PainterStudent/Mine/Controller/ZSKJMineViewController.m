@@ -37,19 +37,25 @@
 @property (nonatomic, strong) ZSKJMineNoticeControl *noticeControl; //!< 消息
 
 
-@property (nonatomic, strong) UIView *bgView;
+@property (nonatomic, strong) UIView *topBgView;
 @property (nonatomic, strong) ZSKJMineHeaderItemOptoonControl *opusOptoonControl; //!< 作品
 @property (nonatomic, strong) ZSKJMineHeaderItemOptoonControl *periodOptoonControl; //!< 剩余课时
 @property (nonatomic, strong) ZSKJMineHeaderItemOptoonControl *leaveOptoonControl; //!< 请假次数
 @property (nonatomic, strong) NSMutableArray *masonryViewArray;
 
 
+
+
+
+
+@property (nonatomic, strong) UIView *bottomBgView; //!< 底部视图
+
 @property (nonatomic, strong) ZSKJMineCellItemControl *studyReportItems; //!< 学习报告
 @property (nonatomic, strong) ZSKJMineCellItemControl *deviceItems; //!< 设备检测
 @property (nonatomic, strong) ZSKJMineCellItemControl *temporaryItems; //!< 临时课堂
 @property (nonatomic, strong) ZSKJMineCellItemControl *serviceItems; //!< 客服
 @property (nonatomic, strong) ZSKJMineCellItemControl *settItems; //!< 设置
-
+@property (nonatomic, strong) NSMutableArray *masonryBottomViewArray;
 
 
 @end
@@ -68,6 +74,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated bottomBar:NO];
+    [self getUserInfoByToken:[ZSKJUserinfoModel shareUserinfo].token];
 }
 
 -(void)addSubVies:(BOOL)views
@@ -79,20 +86,24 @@
         [self.headerBgView addSubview:self.nameLabel];
         [self.headerBgView addSubview:self.uidLabel];
         [self.headerBgView addSubview:self.noticeControl];
-        [self.view addSubview:self.bgView];
-        [self.bgView addSubview:self.opusOptoonControl];
-        [self.bgView addSubview:self.periodOptoonControl];
-        [self.bgView addSubview:self.leaveOptoonControl];
+        
+        [self.view addSubview:self.topBgView];
+        [self.topBgView addSubview:self.opusOptoonControl];
+        [self.topBgView addSubview:self.periodOptoonControl];
+        [self.topBgView addSubview:self.leaveOptoonControl];
         [self.masonryViewArray addObject:self.opusOptoonControl];
         [self.masonryViewArray addObject:self.periodOptoonControl];
         [self.masonryViewArray addObject:self.leaveOptoonControl];
         
+        [self.view addSubview:self.bottomBgView];
+        [self.bottomBgView addSubview:self.studyReportItems];
+        [self.bottomBgView addSubview:self.temporaryItems];
+        [self.bottomBgView addSubview:self.deviceItems];
+        [self.bottomBgView addSubview:self.serviceItems];
+        [self.bottomBgView addSubview:self.settItems];
         
-        [self.view addSubview:self.studyReportItems];
-        [self.view addSubview:self.temporaryItems];
-        [self.view addSubview:self.deviceItems];
-        [self.view addSubview:self.serviceItems];
-        [self.view addSubview:self.settItems];
+        
+        
         
         [self.headerBgView mas_makeConstraints:^(MASConstraintMaker *make) {
            
@@ -136,7 +147,7 @@
         
         
         
-        [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.topBgView mas_makeConstraints:^(MASConstraintMaker *make) {
 
             make.centerY.equalTo(self.headerBgView.mas_bottom);
             make.left.equalTo(self.view.mas_left).offset(15);
@@ -155,13 +166,20 @@
             make.top.equalTo(@(0));
             make.height.equalTo(@(120));
         }];
+        
+        
+        [self.bottomBgView mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.top.equalTo(self.topBgView.mas_bottom).offset(30);
+            make.left.right.equalTo(self.topBgView);
+                    
+        }];
     
         
         [self.studyReportItems mas_makeConstraints:^(MASConstraintMaker *make) {
         
-            make.top.equalTo(self.bgView.mas_bottom).offset(15);
-            make.left.equalTo(self.view.mas_left).offset(15);
-            make.right.equalTo(self.view.mas_right).offset(-15);
+            make.top.equalTo(self.bottomBgView.mas_top);
+            make.left.right.equalTo(self.bottomBgView);
             make.height.equalTo(@(60));
             
         }];
@@ -194,14 +212,48 @@
            
             make.top.equalTo(self.serviceItems.mas_bottom);
             make.left.height.right.equalTo(self.studyReportItems);
+            make.bottom.equalTo(self.bottomBgView.mas_bottom);
         }];
-        
-        
-        
-        
     }
 }
 
+
+
+
+
+#pragma mark - NetWork Method 网络请求
+-(void)getUserInfoByToken:(NSString*)token
+{
+    NSDictionary *parameters = @{@"token":token};
+    [[ZSKJAFHTTPManager shareManager] postUrl:UserInfoByToken_URL parameters:parameters success:^(id  _Nonnull responseObject) {
+            
+        ZSKJNetworkModel *netWorkModel = [ZSKJNetworkModel mj_objectWithKeyValues:responseObject];
+        if (netWorkModel.code.integerValue == 1)
+        {
+            [self analyNetWorkModel:netWorkModel];
+        }
+    } failure:^(NSError * _Nonnull error) {}];
+    
+}
+
+
+#pragma mark 解析数据
+-(void)analyNetWorkModel:(ZSKJNetworkModel *)model
+{
+    [[ZSKJUserinfoModel shareUserinfo] setItemObject:model.data];
+    
+    
+    [self.opusOptoonControl setNum:[ZSKJUserinfoModel shareUserinfo].works];
+    [self.periodOptoonControl setNum:[ZSKJUserinfoModel shareUserinfo].left];
+    [self.leaveOptoonControl setNum:[ZSKJUserinfoModel shareUserinfo].qj];
+    
+    [self.nameLabel setText:[NSString stringWithFormat:@"%@ | %@岁 | %@",[ZSKJUserinfoModel shareUserinfo].name,[ZSKJUserinfoModel shareUserinfo].age,[ZSKJUserinfoModel shareUserinfo].address]];
+    [self.uidLabel setText:[NSString stringWithFormat:@"ID:%@",[ZSKJUserinfoModel shareUserinfo].uid]];
+    
+    
+    
+    
+}
 
 
 
@@ -366,14 +418,14 @@
 }
 
 
--(UIView *)bgView
+-(UIView *)topBgView
 {
-    if (!_bgView)
+    if (!_topBgView)
     {
-        _bgView = [[UIView alloc]init];
-        [_bgView setBackgroundColor:KWhiteColor];
+        _topBgView = [[UIView alloc]init];
+        [_topBgView setBackgroundColor:KWhiteColor];
     }
-    return _bgView;
+    return _topBgView;
 }
 
 
@@ -419,6 +471,20 @@
 
 
 
+
+
+
+
+-(UIView *)bottomBgView
+{
+    if (!_bottomBgView)
+    {
+        _bottomBgView = [[UIView alloc]init];
+        [_bottomBgView setBackgroundColor:KWhiteColor];
+        [_bottomBgView setCornerRadius:CornerRadius_8];
+    }
+    return _bottomBgView;
+}
 
 
 
@@ -506,5 +572,19 @@
     
     return _masonryViewArray;
 }
+
+
+- (NSMutableArray *)masonryBottomViewArray
+{
+    if (!_masonryBottomViewArray)
+    {
+        
+        _masonryBottomViewArray = [NSMutableArray array];
+    }
+    
+    return _masonryBottomViewArray;
+}
+
+
 
 @end

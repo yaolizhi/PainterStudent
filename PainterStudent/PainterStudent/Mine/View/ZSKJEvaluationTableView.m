@@ -7,6 +7,14 @@
 
 #import "ZSKJEvaluationTableView.h"
 
+@interface ZSKJEvaluationTableView ()
+
+@property (nonatomic,weak) id <ZSKJEvaluationTableViewDeletage> evaluationDeletage;
+
+@property (nonatomic, assign) InitType type;
+
+@end
+
 
 
 @implementation ZSKJEvaluationTableView
@@ -28,10 +36,11 @@
     return self;
 }
 
-- (void)setType:(InitType)type
+- (void)setInitType:(InitType)type withDeletage:(id<ZSKJEvaluationTableViewDeletage>)deletage
 {
     _type = type;
     [self beginRefreshing];
+    [self setEvaluationDeletage:deletage];
 }
 
 
@@ -149,9 +158,27 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    
-    
+    ZSKJEvaluationModel *model = [self.dataArray objectAtIndex:indexPath.row];
+    switch (model.status)
+    {
+        case 1:
+        {
+            [MBHUD showError:@"课程还未结束"];
+        }
+            break;
+        case 2:
+        {
+            if ([self.evaluationDeletage respondsToSelector:@selector(didSelectEvaluationItem:)])
+            {
+                [self.evaluationDeletage didSelectEvaluationItem:model];
+            }
+        }
+            break;
+    }
 }
+
+
+
 
 
 

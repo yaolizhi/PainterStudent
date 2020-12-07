@@ -18,7 +18,7 @@
 
 @property (nonatomic, strong) UIImageView *preview;
 @property (nonatomic, strong) UIImageView *typeView;
-@property (nonatomic, strong) UIButton *lectureBtn;
+@property (nonatomic, strong) UILabel *lecture;
 
 
 @end
@@ -42,7 +42,7 @@
         [self.bgView addSubview:self.preview];
         [self.bgView addSubview:self.typeView];
         [self.typeView addSubview:self.typeLabel];
-        [self.bgView addSubview:self.lectureBtn];
+        [self.bgView addSubview:self.lecture];
         
         
         
@@ -100,7 +100,7 @@
                     
         }];
         
-        [self.lectureBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        [self.lecture mas_makeConstraints:^(MASConstraintMaker *make) {
 
             make.left.bottom.right.equalTo(self.bgView);
             make.height.equalTo(@(44));
@@ -121,7 +121,6 @@
     [self.titleLabel setText:model.title];
     [self.subtitleLabel setText:model.title];
     [self.typeLabel setText:model.type_text];
-    [self.lectureBtn setTitle:model.status_text forState:UIControlStateNormal];
     
     switch (model.type)
     {
@@ -134,6 +133,21 @@
         {
             [self.typeView setImageName:@"auditionl"];
             
+        }
+            break;
+    }
+    
+    
+    switch (model.status)
+    {
+        case 1:
+        {
+            [self.lecture setText:model.status_text];
+        }
+            break;
+        case 2:
+        {
+            [self.lecture setText:@"查看学习报告"];
         }
             break;
     }
@@ -230,16 +244,16 @@
 
 
 
--(UIButton *)lectureBtn
+-(UILabel *)lecture
 {
-    if (!_lectureBtn)
+    if (!_lecture)
     {
-        _lectureBtn = [[UIButton alloc]init];
-        [_lectureBtn setTitleColor:KWhiteColor forState:UIControlStateNormal];
-        [_lectureBtn setBackgroundColor:KMainColor];
-        [_lectureBtn setTag:2];
+        _lecture = [[UILabel alloc]init];
+        [_lecture setTextColor:KWhiteColor];
+        [_lecture setBackgroundColor:KMainColor];
+        [_lecture setTextAlignment:NSTextAlignmentCenter];
     }
-    return _lectureBtn;
+    return _lecture;
 }
 
 

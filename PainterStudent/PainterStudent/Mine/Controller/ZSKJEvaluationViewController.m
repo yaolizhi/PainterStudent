@@ -8,13 +8,15 @@
 #import "ZSKJEvaluationViewController.h"
 #import "ZSKJCourseOptionControl.h"
 #import "ZSKJEvaluationTableView.h"
+#import "ZSKJCommentViewController.h"
 
 
 
 
 
 
-@interface ZSKJEvaluationViewController () <ZSKJCourseOptionControlDeletage>
+
+@interface ZSKJEvaluationViewController () <ZSKJCourseOptionControlDeletage,ZSKJOptionScrollViewDeletage,ZSKJEvaluationTableViewDeletage>
 
 
 
@@ -57,6 +59,7 @@
 
 
 #pragma mark - Deletage Method
+#pragma mark ZSKJCourseOptionControlDeletage
 -(void)optionItemAction:(NSInteger)index
 {
     [self.optionScrollView setContentOffPage:index];
@@ -69,6 +72,14 @@
     [self.optionControl setIndexTag:page];
 }
 
+
+#pragma mark ZSKJEvaluationTableViewDeletage
+-(void)didSelectEvaluationItem:(ZSKJEvaluationModel *)model
+{
+    ZSKJCommentViewController *comment = [[ZSKJCommentViewController alloc]init];
+    [comment setModel:model];
+    [self pushViewController:comment animated:YES];
+}
 
 
 
@@ -109,7 +120,7 @@
     if (!_formalTableView)
     {
         _formalTableView = [[ZSKJEvaluationTableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, self.optionScrollView.height) witDeletage:self];
-        [_formalTableView setType:FormalType];
+        [_formalTableView  setInitType:FormalType withDeletage:self];
     }
     return _formalTableView;
 }
@@ -119,7 +130,7 @@
     if (!_auditionlTableView)
     {
         _auditionlTableView = [[ZSKJEvaluationTableView alloc]initWithFrame:CGRectMake(self.formalTableView.right, 0, ScreenWidth, self.optionScrollView.height) witDeletage:self];
-        [_auditionlTableView setType:AuditionlType];
+        [_auditionlTableView setInitType:AuditionlType withDeletage:self];
     }
     return _auditionlTableView;
 }

@@ -8,11 +8,25 @@
 #import "SSKJ_TableView.h"
 #import "ZSKJEvaluationTableViewCell.h"
 
+
+@protocol ZSKJEvaluationTableViewDeletage <NSObject>
+
+-(void)didSelectEvaluationItem:(ZSKJEvaluationModel*_Nullable)model;
+
+
+@end
+
+
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ZSKJEvaluationTableView : SSKJ_TableView <UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic, assign) InitType type;  //!< 1 正式报告  2 测试报告
+-(void)setInitType:(InitType)type withDeletage:(id<ZSKJEvaluationTableViewDeletage>)deletage;
+
+
+
+
 
 
 

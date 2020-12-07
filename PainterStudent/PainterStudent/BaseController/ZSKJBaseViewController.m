@@ -214,4 +214,10 @@
 
 
 
+#pragma mark 解析数据
+-(void)analyNetWorkModel:(ZSKJNetworkModel*)model
+{
+    
+}
+
 @end

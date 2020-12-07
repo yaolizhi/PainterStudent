@@ -31,14 +31,24 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *uid; //!< 用户ID
 @property (nonatomic, copy) NSString *sexOption; //!< 向别
 @property (nonatomic, assign) NSInteger sex; //!<    1男 2女
-
-
-
-
-
 @property (nonatomic, strong) NSMutableArray *imgs; //!< 作品
 @property (nonatomic, strong) NSMutableArray *nature; //!< 性格
-@property (nonatomic, strong) NSMutableArray *hobby; //!< 兴趣
+@property (nonatomic, strong) NSMutableArray *hobby; //!< 兴趣，爱好
+
+
+#pragma mark  学生端字段
+@property (nonatomic, copy) NSString *art_base; //!< "学过绘画三年"
+@property (nonatomic, copy) NSString *parent_name; //!< 家长名字
+@property (nonatomic, copy) NSString *parent_mobile; //!< 手机号
+@property (nonatomic, copy) NSString *parent_wx; //!< 家长微信
+@property (nonatomic, copy) NSString *parent_email; //!< 家长邮箱
+@property (nonatomic, copy) NSString *linkman; //!< 联系人(监护人)
+@property (nonatomic, copy) NSString *linkman_mobile; //!< 联系人(监护人)手机号
+@property (nonatomic, copy) NSString *birthday; //!< 生日
+@property (nonatomic, copy) NSString *remark; //!< 标签 王大虎学习比较好
+@property (nonatomic, copy) NSString *works; //作品
+@property (nonatomic, copy) NSString *left; //剩余课程
+@property (nonatomic, copy) NSString *qj; //本月剩余请假次数
 
 
 

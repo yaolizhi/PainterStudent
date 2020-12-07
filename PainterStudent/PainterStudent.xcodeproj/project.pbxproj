@@ -210,6 +210,7 @@
 		96C8084D257B8CCB00DDDB1E /* ZSKJEvaluationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C8084C257B8CCB00DDDB1E /* ZSKJEvaluationTableViewCell.m */; };
 		96C80851257B8E1300DDDB1E /* ZSKJEvaluationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C80850257B8E1300DDDB1E /* ZSKJEvaluationModel.m */; };
 		96F10DC3257DD68200CD9BDD /* ZSKJCreationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F10DC2257DD68200CD9BDD /* ZSKJCreationModel.m */; };
+		96F10DC7257DFC7300CD9BDD /* ZSKJCommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96F10DC5257DFC7300CD9BDD /* ZSKJCommentViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -632,6 +633,8 @@
 		96C80850257B8E1300DDDB1E /* ZSKJEvaluationModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSKJEvaluationModel.m; sourceTree = "<group>"; };
 		96F10DC1257DD68200CD9BDD /* ZSKJCreationModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZSKJCreationModel.h; sourceTree = "<group>"; };
 		96F10DC2257DD68200CD9BDD /* ZSKJCreationModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZSKJCreationModel.m; sourceTree = "<group>"; };
+		96F10DC5257DFC7300CD9BDD /* ZSKJCommentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZSKJCommentViewController.m; sourceTree = "<group>"; };
+		96F10DC6257DFC7300CD9BDD /* ZSKJCommentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZSKJCommentViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1513,6 +1516,8 @@
 				965A069325779CD400351E23 /* ZSKJCreationViewController.m */,
 				96C80844257B8BB800DDDB1E /* ZSKJEvaluationViewController.h */,
 				96C80843257B8BB800DDDB1E /* ZSKJEvaluationViewController.m */,
+				96F10DC6257DFC7300CD9BDD /* ZSKJCommentViewController.h */,
+				96F10DC5257DFC7300CD9BDD /* ZSKJCommentViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1794,6 +1799,7 @@
 				965A06382577822800351E23 /* ZSKJMineNoticeControl.m in Sources */,
 				965A05D625777CB700351E23 /* SDCollectionViewCell.m in Sources */,
 				965A05A025777CB600351E23 /* YYAnimatedImageView.m in Sources */,
+				96F10DC7257DFC7300CD9BDD /* ZSKJCommentViewController.m in Sources */,
 				965A058B25777CB600351E23 /* UIScrollView+MJExtension.m in Sources */,
 				96C80831257B66FB00DDDB1E /* ZSKJOptionScrollView.m in Sources */,
 				965A05AE25777CB700351E23 /* IQTextView.m in Sources */,

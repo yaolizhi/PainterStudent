@@ -138,7 +138,7 @@
 #pragma mark UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake((ScreenWidth-60)/3.0, 175);
+    return CGSizeMake((ScreenWidth-60)/3.0, 270);
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -166,6 +166,7 @@
     if (!_creationCollectionView)
     {
         _creationCollectionView = [[ZSKJCollectionView alloc]initWithFrame:CGRectMake(0, self.navbarHeight, ScreenWidth, ScreenHeight-self.navbarHeight) withType:VerticalType];
+        [_creationCollectionView setBackgroundColor:KWhiteColor];
         [_creationCollectionView registerClass:[ZSKJCreationCollectionViewCell class] forCellWithReuseIdentifier:@"ZSKJCreationCollectionViewCell"];
         [_creationCollectionView setDelegate:self];
         [_creationCollectionView setDataSource:self];

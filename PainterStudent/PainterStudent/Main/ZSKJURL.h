@@ -34,6 +34,13 @@
 /* 学生作品 */
 #define Myworks_URL [NSString stringWithFormat:@"%@%@",ProductBaseServer,@"index/user/myworks"]
 
+/* 学生报告详情 */
+#define ReadReport_URL [NSString stringWithFormat:@"%@%@",ProductBaseServer,@"index/user/readReport"]
+
+
+/* 学生个人信息|我的 */
+#define UserInfoByToken_URL [NSString stringWithFormat:@"%@%@",ProductBaseServer,@"index/user/getUserInfoByToken"]
+
 
 
 

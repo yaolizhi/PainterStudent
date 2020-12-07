@@ -64,8 +64,14 @@ static ZSKJUserinfoModel *shareUserinfo = nil;
     [self setUid:[object objectForKey:@"id"]];
     
     [self.imgs setArray:[object objectForKey:@"imgs"]];
-    [self.nature setArray:[object objectForKey:@"nature"]];
-    [self.hobby setArray:[object objectForKey:@"hobby"]];
+    [self.nature setArray:[[object objectForKey:@"nature"] componentsSeparatedByString:@"，"]];
+    [self.hobby setArray:[[object objectForKey:@"hobby"] componentsSeparatedByString:@"，"]];
+    
+    
+    [self setQj:[object objectForKey:@"qj"]];
+    [self setLeft:[object objectForKey:@"left"]];
+    [self setWorks:[object objectForKey:@"works"]];
+    
     
 }
 
